@@ -54,7 +54,7 @@ def CalculateOrRecoverHash(file):
 # Cerca els source_files dins de back_files (segons tamany)
 # Opcionalment llegeix i compara el seu contingut (calculant el seu hash MD5).
 # ------------------------------------------------------------------
-def VerifyBackup(source_files, backup_files, readContent=True, Verbose=True):
+def VerifyBackup(source_files, backup_files, readContent=True, verbose=True):
   
   missing = []
 
@@ -74,13 +74,13 @@ def VerifyBackup(source_files, backup_files, readContent=True, Verbose=True):
       for src_file in source_files[size]:
         found = False
         counter += 1
-        if Verbose: print(f"\nSource: {src_file}", flush=True) 
+        if verbose: print(f"\nSource: {src_file}", flush=True) 
         else: print(f"{counter} \r", end="", flush=True) 
         src_md5 = CalculateOrRecoverHash(src_file)
         for bak_file in backup_files[size]:
           bak_md5 = CalculateOrRecoverHash(bak_file) 
           if src_md5 == bak_md5: 
-            if Verbose: print(f">>Backup: {bak_file}", flush=True)
+            if verbose: print(f">>Backup: {bak_file}", flush=True)
             found = True
         if not found:
           missing.append(src_file)
@@ -104,6 +104,6 @@ source_files, source_counter = GetFilesInfo(source)
 backup_files, backup_counter = GetFilesInfo(backup)
 print(f"{source_counter} source files in {source}.")
 print(f"{backup_counter} backup files in {backup}.")
-VerifyBackup(source_files, backup_files, readContent=True, Verbose=False) # readContent es lent però segur!!!
+VerifyBackup(source_files, backup_files, readContent=True, verbose=False) # readContent es lent però segur!!!
 
 
